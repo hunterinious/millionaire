@@ -11,6 +11,9 @@ gem 'jquery-rails'
 gem 'twitter-bootstrap-rails'
 gem 'font-awesome-rails'
 gem 'russian'
+gem 'rspec-rails'
+gem 'factory_girl_rails'
+gem 'shoulda-matchers'
 
 group :development, :test do
   gem 'sqlite3'
