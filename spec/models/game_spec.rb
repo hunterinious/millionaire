@@ -99,7 +99,7 @@ RSpec.describe Game, type: :model do
     end
 
     it 'timeout' do
-      game_w_questions.if_failed = true
+      game_w_questions.is_failed = true
       game_w_questions.created_at = 1.hour.ago
       expect(game_w_questions.status).to eq(:timeout)
     end
@@ -118,4 +118,34 @@ RSpec.describe Game, type: :model do
       expect(game_w_questions.status).to eq(:money)
     end
   end
+
+  context '.current_game_question' do
+    it 'return current question'do
+      level = game_w_questions.current_level
+      question = game_w_questions.game_questions[level]
+
+      expect(game_w_questions.current_game_question).to eq question
+    end
+
+    it 'return nil if level uncorrect' do
+      game_w_questions.current_level = 17
+
+      expect(game_w_questions.current_game_question).to be_nil
+    end
+  end
+
+  context '.previous level' do
+    it 'return current level -1' do
+      game_w_questions.current_level = 8
+
+      expect(game_w_questions.previous_level).to eq 7
+    end
+
+    it 'return -1 if it first question' do
+      game_w_questions.current_level = 0
+
+      expect(game_w_questions.previous_level).to eq -1
+    end
+  end
+
 end
