@@ -12,6 +12,10 @@ RSpec.describe GameQuestion, type: :model do
     FactoryGirl.create(:game_question, a: 2, b: 1, c: 4, d: 3)
   end
 
+  let(:wrong_game_question) do
+    FactoryGirl.create(:game_question, a: 2, b: 3, c: 4, d: 3)
+  end
+
   # Группа тестов на игровое состояние объекта вопроса
   context 'game status' do
     # Тест на правильную генерацию хэша с вариантами
@@ -32,6 +36,16 @@ RSpec.describe GameQuestion, type: :model do
     it 'correct .level & .text delegates' do
       expect(game_question.text).to eq(game_question.question.text)
       expect(game_question.level).to eq(game_question.question.level)
+    end
+  end
+
+  context '.correct_answer_key' do
+    it 'should be b' do
+      expect(game_question.correct_answer_key).to eq 'b'
+    end
+
+    it 'should be nil' do
+      expect(wrong_game_question.correct_answer_key).to be_nil
     end
   end
 end
