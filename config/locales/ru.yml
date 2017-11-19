@@ -1,4 +1,10 @@
 ru:
+
+  title: "Милионер"
+
+  users:
+    all_users: "Все игроки"
+
   controllers:
     games:
       not_your_game: "Это не ваша игра!"

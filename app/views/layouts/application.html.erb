@@ -41,7 +41,7 @@
 
 <div class="navbar navbar-default navbar-static-top">
   <div class="container">
-    <%= link_to 'Billionaire', root_path, class: 'navbar-brand' %>
+    <%= link_to t('title'), root_path, class: 'navbar-brand' %>
     <% if user_signed_in? %>
       <div class="navbar-form navbar-right">
         <%= link_to content_tag(:span, "#{current_user.name} - #{number_to_currency current_user.balance}"),
