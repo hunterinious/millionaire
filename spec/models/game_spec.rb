@@ -148,4 +148,32 @@ RSpec.describe Game, type: :model do
     end
   end
 
+  context 'answer_current_question!' do
+    let(:q) { game_w_questions.current_game_question }
+
+    it 'answer correct' do
+      expect(game_w_questions.answer_current_question!(q.correct_answer_key)).to be_truthy
+      expect(game_w_questions.status).to eq :in_progress
+    end
+
+    it 'incorrect answer' do
+      expect(game_w_questions.answer_current_question!('a')).to be_falsey
+      expect(game_w_questions.status).to eq :fail
+    end
+
+    it 'timeout' do
+      game_w_questions.created_at = 1.hour.ago
+
+      expect(game_w_questions.answer_current_question!(q.correct_answer_key)).to be_falsey
+      expect(game_w_questions.status).to eq :timeout
+    end
+
+    it 'last answer correct' do
+      game_w_questions.current_level = Question::QUESTION_LEVELS.max
+
+      expect(game_w_questions.answer_current_question!(q.correct_answer_key)).to be_truthy
+      expect(game_w_questions.status).to eq :won
+      expect(game_w_questions.prize). to eq 1000000
+    end
+  end
 end
