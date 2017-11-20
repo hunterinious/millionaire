@@ -86,5 +86,23 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to redirect_to(game_path(game))
       expect(flash.empty?).to be_truthy # удачный ответ не заполняет flash
     end
+
+    # юзер берет деньги
+    it 'takes money' do
+      # вручную поднимем уровень вопроса до выигрыша 100
+      game_w_questions.update_attribute(:current_level, 1)
+
+      put :take_money, id: game_w_questions.id
+      game = assigns(:game)
+      expect(game.finished?).to be_truthy
+      expect(game.prize).to eq(100)
+
+      # пользователь изменился в базе, надо в коде перезагрузить!
+      user.reload
+      expect(user.balance).to eq(100)
+
+      expect(response).to redirect_to(user_path(user))
+      expect(flash[:warning]).to be
+    end
   end
 end
