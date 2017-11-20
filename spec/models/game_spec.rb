@@ -148,17 +148,19 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  context 'answer_current_question!' do
+  context '.answer_current_question!' do
     let(:q) { game_w_questions.current_game_question }
 
     it 'answer correct' do
       expect(game_w_questions.answer_current_question!(q.correct_answer_key)).to be_truthy
       expect(game_w_questions.status).to eq :in_progress
+      expect(game_w_questions.finished?).to be_falsey
     end
 
     it 'incorrect answer' do
       expect(game_w_questions.answer_current_question!('a')).to be_falsey
       expect(game_w_questions.status).to eq :fail
+      expect(game_w_questions.finished?).to be_truthy
     end
 
     it 'timeout' do
@@ -166,6 +168,7 @@ RSpec.describe Game, type: :model do
 
       expect(game_w_questions.answer_current_question!(q.correct_answer_key)).to be_falsey
       expect(game_w_questions.status).to eq :timeout
+      expect(game_w_questions.finished?).to be_truthy
     end
 
     it 'last answer correct' do
@@ -174,6 +177,7 @@ RSpec.describe Game, type: :model do
       expect(game_w_questions.answer_current_question!(q.correct_answer_key)).to be_truthy
       expect(game_w_questions.status).to eq :won
       expect(game_w_questions.prize). to eq 1000000
+      expect(game_w_questions.finished?).to be_truthy
     end
   end
 end
