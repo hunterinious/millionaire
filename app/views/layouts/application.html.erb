@@ -43,6 +43,11 @@
   <div class="container">
     <%= link_to t('title'), root_path, class: 'navbar-brand' %>
     <% if user_signed_in? %>
+
+      <% if current_user.is_admin %>
+          <%= link_to 'Залить новые вопросы', new_questions_path, class: 'btn navbar-btn btn-warning btn-xs' %>
+      <% end %>
+
       <div class="navbar-form navbar-right">
         <%= link_to content_tag(:span, "#{current_user.name} - #{number_to_currency current_user.balance}"),
                     user_path(current_user),
