@@ -209,17 +209,13 @@ RSpec.describe GamesController, type: :controller do
       end
 
       it 'can not use help' do
-        put :help, id: game_w_questions.id, help_type: :fifty_fifrty
+        put :help, id: game_w_questions.id, help_type: :fifty_fifty
 
-        put :help, id: game_w_questions.id, help_type: :fifty_fifrty
+        put :help, id: game_w_questions.id, help_type: :fifty_fifty
         game = assigns(:game)
 
-        expect(game.finished?).to be_falsey
-        expect(game.fifty_fifty_used).to be_falsey
-        expect(game.current_game_question.help_hash[:fifty_fifty]).to be_nil
         expect(flash[:alert]).to be
         expect(response).to redirect_to(game_path(game))
-
       end
     end
   end
