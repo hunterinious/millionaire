@@ -48,4 +48,17 @@ RSpec.describe GameQuestion, type: :model do
       expect(wrong_game_question.correct_answer_key).to be_nil
     end
   end
+
+  context 'user helpers' do
+    it 'correct audience_help' do
+      expect(game_question.help_hash).not_to include(:audience_help)
+
+      game_question.add_audience_help
+
+      expect(game_question.help_hash).to include(:audience_help)
+
+      ah = game_question.help_hash[:audience_help]
+      expect(ah.keys).to contain_exactly('a', 'b', 'c', 'd')
+    end
+  end
 end
