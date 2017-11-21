@@ -194,5 +194,33 @@ RSpec.describe GamesController, type: :controller do
       expect(game.current_game_question.help_hash[:audience_help].keys).to contain_exactly('a', 'b', 'c', 'd')
       expect(response).to redirect_to(game_path(game))
     end
+
+    context 'user use help' do
+      it 'can use help' do
+        put :help, id: game_w_questions.id, help_type: :fifty_fifty
+        game = assigns(:game)
+
+        expect(game.finished?).to be_falsey
+        expect(game.fifty_fifty_used).to be_truthy
+        expect(game.current_game_question.help_hash[:fifty_fifty]).to be
+        expect(game.current_game_question.help_hash[:fifty_fifty]).to include(game.current_game_question.correct_answer_key)
+        expect(flash[:info]).to be
+        expect(response).to redirect_to(game_path(game))
+      end
+
+      it 'can not use help' do
+        put :help, id: game_w_questions.id, help_type: :fifty_fifrty
+
+        put :help, id: game_w_questions.id, help_type: :fifty_fifrty
+        game = assigns(:game)
+
+        expect(game.finished?).to be_falsey
+        expect(game.fifty_fifty_used).to be_falsey
+        expect(game.current_game_question.help_hash[:fifty_fifty]).to be_nil
+        expect(flash[:alert]).to be
+        expect(response).to redirect_to(game_path(game))
+
+      end
+    end
   end
 end
