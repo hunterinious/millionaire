@@ -32,10 +32,8 @@ RSpec.describe GamesController, type: :controller do
     it 'kicked from #create' do
       generate_questions(15)
       post :create
-      game = assigns(:game)
 
-      expect(game).to be_nil
-      expect(response.status).not_to eq 200
+      expect(response.status).to eq 302
       expect(response).to redirect_to(new_user_session_path)
       expect(flash[:alert]).to be
     end
@@ -44,7 +42,7 @@ RSpec.describe GamesController, type: :controller do
       game =  FactoryGirl.create(:game_with_questions)
       put :answer, id: game.id, letter: game.current_game_question.correct_answer_key
 
-      expect(response.status).not_to eq 200
+      expect(response.status).to eq 302
       expect(response).to redirect_to(new_user_session_path)
       expect(flash[:alert]).to be
     end
@@ -54,7 +52,7 @@ RSpec.describe GamesController, type: :controller do
 
       put :take_money, id: game.id
 
-      expect(response.status).not_to eq 200
+      expect(response.status).to eq 302
       expect(response).to redirect_to(new_user_session_path)
       expect(flash[:alert]).to be
     end
