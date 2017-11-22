@@ -42,7 +42,7 @@
     <% end %>
   </div>
   <div class="col-sm-4">
-    <% unless game.audience_help_used? %>
+    <% unless game.audience_help_user? %>
       <%= link_to fa_icon('users'), help_game_path(game, help_type: :audience_help), method: :put, class: 'btn btn-default btn-block btn-help' %>
     <% end %>
   </div>

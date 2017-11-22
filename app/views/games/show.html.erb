@@ -23,6 +23,11 @@
         <% end %>
       </div>
     </div>
+
+    <div class="buffer-top-lg">
+      <%# Выводим шаблон с кнопками для подсказок и информацией о подсказках %>
+      <%= render partial: 'help', object: @game_question.help_hash, locals: {game: @game} %>
+    </div>
   </div>
 
   <div class="col-sm-3 col-sm-pull-9">
