@@ -23,7 +23,8 @@ bundle exec rake db: migrate
 To start the local server, run the following command:
 
 `bundle exec rails s`
-`The list of all used gems is specified in the Gemfile file.`
+
+The list of all used gems is specified in the Gemfile file.
 
 ### Demo
 The latest current version of the application is running [here](https://hwbm.herokuapp.com/)
